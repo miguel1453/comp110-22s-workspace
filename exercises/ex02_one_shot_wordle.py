@@ -15,7 +15,7 @@ secret_word = "python"
 """input: asks user for their guess and checks to see if is the correct lenght"""
 guess: str = input(f"What is your {len(secret_word)}-letter guess? ")
 while len(guess) != len(secret_word): 
-    guess: str = input(f"That was not {len(secret_word)} letters! Try again: ")
+    guess = input(f"That was not {len(secret_word)} letters! Try again: ")
 
 """main loop that assigns the color of box for the output"""
 while i != len(secret_word):
