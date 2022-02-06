@@ -1,19 +1,19 @@
-"""Strcutured wordle exercise"""
+"""Strcutured wordle exercise."""
 __author__ = "730472629"
 
 
 def main() -> None:
-    """The entrypoint of the program and main game loop"""
+    """The entrypoint of the program and main game loop."""
     secret: str = "codes"
     turns: int = 6
-    i: int = 1
+    i: int = 0
     guess: str = ""
-    while i <= 6 and guess != secret:
+    while i <= 5 and guess != secret:
+        i += 1
         print(f"=== Turn {i}/{turns} ===")
         guess = input_guess(len(secret))
         box_output: str = emojified(guess, secret)
         print(box_output)
-        i += 1
     if guess == secret:
         print(f"You won in {i}/{turns} turns!")
     else:
@@ -21,15 +21,15 @@ def main() -> None:
 
 
 def input_guess(expected_length: int) -> str:
-    """checks the length of the guess"""
-    guess: str = str(input(f"Enter a {expected_length} letter word: "))
+    """Checks the length of the guess."""
+    guess: str = str(input(f"Enter a {expected_length} character word: "))
     while len(guess) != expected_length:
-        guess = input(f"That wasn't {expected_length} characters! Try again: ")
+        guess = input(f"That wasn't {expected_length} chars! Try again: ")
     return guess
 
 
-def emojified(guess: str, secret) -> str:
-    """assings the color of the box for the user output"""
+def emojified(guess: str, secret: str) -> str:
+    """Assings the color of the box for the user output."""
     assert len(guess) == len(secret)
     WHITE_BOX: str = "\U00002B1C"
     GREEN_BOX: str = "\U0001F7E9"
@@ -48,7 +48,7 @@ def emojified(guess: str, secret) -> str:
 
 
 def contains_char(secret: str, letter_to_check: str) -> bool:
-    """checks input word to see if characters match up anywhere in secret"""
+    """Checks input word to see if characters match up anywhere in secret."""
     assert len(letter_to_check) == 1
     i: int = 0
     while i < len(secret):
