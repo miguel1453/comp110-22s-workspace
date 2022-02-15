@@ -1,105 +1,119 @@
-"""Insert here """
+"""Night sky scene using turtle."""
 
 __author__ = "730472629"
 
-from turtle import Turtle, colormode, done
+from turtle import Turtle, Vec2D, colormode, tracer, update, done
 from random import randint
 colormode(255)
 
+"""Here I use turtles to make a skyline! I coded this to where 
+there will always be a random number of buildings (3 - 6) each time
+this program is run. I also had to find my own ways on how to center
+the drawings on the screen no matter the number of buildings randomly
+assigned. I had to google around to find what Vec2D was to use position
+in turtle, I hope that's okay! It made making the stars so much easier.
+It also wouldn't let me put this whole doc string at the top so I put it here."""
+
+
+SCREEN_WIDTH: float = 750
+
 
 def main() -> None:
-    """Entrypoint of my scene"""
-    poot: Turtle = Turtle()
-    backround(poot, 750)
+    """Entrypoint of my scene."""
+    tracer(0, 0)  # disable all turtle's delay
+    backround(SCREEN_WIDTH)
     stars()
-    towers(poot, 400)
-    towers(poot, 200)
+    towers(SCREEN_WIDTH * .6)
+    towers(SCREEN_WIDTH * .3)
     done()
     
     
-def backround(a_turtle: Turtle, width: float) -> None:
-    """"""
-    a_turtle.speed(100)
-    a_turtle.color(25, 7, 95)
-    a_turtle.begin_fill()
-    a_turtle.goto((0 - (width / 2)), (width / 2))
+def backround(width: float) -> None:
+    """Creates the night sky."""
+    atlas: Turtle = Turtle()
+    atlas.hideturtle()
+    atlas.color(25, 7, 95)
+    atlas.begin_fill()
+    atlas.goto((0 - (width / 2)), (width / 2))
     i: int = 0
     while i < 4:
-        a_turtle.forward(width)
-        a_turtle.right(90)
+        atlas.forward(width)
+        atlas.right(90)
         i += 1
-    a_turtle.end_fill()
+    atlas.end_fill()
+    update()
 
 
 def stars() -> None:
-    """Creates stars on the backround!"""
+    """Creates stars on the backround."""
     zeus: Turtle = Turtle()
-    zeus.shape("turtle")
+    zeus.hideturtle()
     zeus.color("white", "black")
     zeus.penup()
-    zeus.speed(0)
-    zeus.goto(-375, -340)
+    zeus.goto((SCREEN_WIDTH / -2), (SCREEN_WIDTH / -2))
     iteration: int = 0
-    new_distance: int = 0
-    while iteration < 10:
-        new_distance += 70
+    distance: float = 0
+    while iteration < SCREEN_WIDTH * .015:  # draws 10 lines of stars
+        distance += SCREEN_WIDTH * .09
         count: int = 0
-        """draws row of stars"""
-        while count < 10:
+        while count < SCREEN_WIDTH * .1:  # draws a row of stars
+            return_pos: Vec2D = zeus.position()
             i: int = 0
-            """Draws a singular star"""
-            while i < 6:
+            while i < 10:  # draws a singular star
                 zeus.pendown()
-                zeus.forward(30)
-                zeus.right(144)
+                zeus.forward(20)
+                zeus.right(160)
                 zeus.penup()
                 i += 1
+            zeus.goto(return_pos)
             zeus.setheading(0.0)
-            zeus.forward(50)
+            zeus.forward(SCREEN_WIDTH * .1)
             count += 1
         zeus.setheading(0.0)
-        zeus.goto(-375, -340 + new_distance)
+        zeus.goto((SCREEN_WIDTH / -2), (SCREEN_WIDTH / -2) + distance)
         iteration += 1
+    update()
 
 
-def towers(a_turtle: Turtle, height: int) -> None:
-    """Function for the towers!"""
-    a_turtle.color("black", (79, 77, 76))
-    a_turtle.pensize(5)
-    a_turtle.penup()
-    a_turtle.home()
-    a_turtle.goto(-375, -375)
+def towers(height: float) -> None:
+    """Function for the towers."""
+    hephaestus: Turtle = Turtle()
+    hephaestus.color("black", (79, 77, 76))
+    hephaestus.pensize(5)
+    hephaestus.penup()
+    hephaestus.home()
+    hephaestus.goto((SCREEN_WIDTH / -2), (SCREEN_WIDTH / -2))
     num_buildings: int = randint(3, 10)
-    space_available: float = 750 / num_buildings
+    space_available: float = SCREEN_WIDTH / num_buildings
     tower_buffer = space_available * .10
     tower_width: float = space_available - (tower_buffer)
     i: int = 0
     while i < num_buildings:
-        a_turtle.begin_fill()
-        a_turtle.pendown()
-        a_turtle.begin_fill()
-        a_turtle.left(90)
-        a_turtle.forward(height)
-        a_turtle.right(90)
-        a_turtle.forward(tower_width)
-        a_turtle.right(90)
-        a_turtle.forward(height)
-        a_turtle.end_fill()
-        a_turtle.setheading(0.0)
-        a_turtle.forward(tower_buffer)
+        hephaestus.begin_fill()
+        hephaestus.pendown()
+        hephaestus.begin_fill()
+        hephaestus.left(90)
+        hephaestus.forward(height)
+        hephaestus.right(90)
+        hephaestus.forward(tower_width)
+        hephaestus.right(90)
+        hephaestus.forward(height)
+        hephaestus.end_fill()
+        hephaestus.setheading(0.0)
+        hephaestus.forward(tower_buffer)
         i += 1
-    tower_windows(a_turtle, tower_width, tower_buffer, height, num_buildings)
+    update()
+    tower_windows(tower_width, tower_buffer, height, num_buildings)
     
 
-def tower_windows(a_turtle: Turtle, tower_width: float, tower_buffer: float, height: float, num_buildings: int) -> None: 
-    """Puts the windows on the buildings!"""
-    leo: Turtle = Turtle()
-    leo.pensize(3)
-    leo.shape("turtle")
-    leo.color("black", "yellow")
-    leo.speed(1000)
-    leo.penup()
-    leo.goto(-375, -375)
+def tower_windows(tower_width: float, tower_buffer: float, height: float, num_buildings: int) -> None: 
+    """Puts the windows on the buildings."""
+    hephaestus: Turtle = Turtle()
+    hephaestus.hideturtle()
+    hephaestus.pensize(3)
+    hephaestus.color("black", "yellow")
+    hephaestus.penup()
+    hephaestus.goto((SCREEN_WIDTH / -2), (SCREEN_WIDTH / -2))
     width_available: float = tower_width * .25
     height_available: float = height / 5
     window_width_buffer: float = width_available * .4
@@ -107,43 +121,44 @@ def tower_windows(a_turtle: Turtle, tower_width: float, tower_buffer: float, hei
     window_width: float = width_available * .6
     window_height: float = height_available * .6
     iteration: int = 0
-    leo.goto((-375 - (window_width_buffer / 2)), (-375 - (window_height_buffer / 2)))
+    hephaestus.goto(((SCREEN_WIDTH / -2) - (window_width_buffer / 2)), ((SCREEN_WIDTH / -2) - (window_height_buffer / 2)))
     while iteration < num_buildings:
         count: int = 0
         while count < 5:
             i: int = 0
             while i < 4:
-                leo.forward(window_width_buffer)
-                leo.left(90)
-                leo.forward(window_height_buffer)
-                leo.right(90)
-                leo.pendown()
-                leo.begin_fill()
-                leo.forward(window_width)
-                leo.left(90)
-                leo.forward(window_height)
-                leo.left(90)
-                leo.forward(window_width)
-                leo.left(90)
-                leo.forward(window_height)
-                leo.left(90)
-                leo.end_fill()
-                leo.penup()
-                leo.backward(window_width_buffer)
-                leo.right(90)
-                leo.forward(window_height_buffer)
-                leo.left(90)
-                leo.forward(width_available)
+                hephaestus.forward(window_width_buffer)
+                hephaestus.left(90)
+                hephaestus.forward(window_height_buffer)
+                hephaestus.right(90)
+                hephaestus.pendown()
+                hephaestus.begin_fill()
+                hephaestus.forward(window_width)
+                hephaestus.left(90)
+                hephaestus.forward(window_height)
+                hephaestus.left(90)
+                hephaestus.forward(window_width)
+                hephaestus.left(90)
+                hephaestus.forward(window_height)
+                hephaestus.left(90)
+                hephaestus.end_fill()
+                hephaestus.penup()
+                hephaestus.backward(window_width_buffer)
+                hephaestus.right(90)
+                hephaestus.forward(window_height_buffer)
+                hephaestus.left(90)
+                hephaestus.forward(width_available)
                 i += 1
-            leo.backward(tower_width)
-            leo.left(90)
-            leo.forward(height_available)
-            leo.right(90)
+            hephaestus.backward(tower_width)
+            hephaestus.left(90)
+            hephaestus.forward(height_available)
+            hephaestus.right(90)
             count += 1
-        leo.forward(tower_buffer + tower_width)
-        leo.right(90)
-        leo.forward(height)
-        leo.left(90)
+        update()
+        hephaestus.forward(tower_buffer + tower_width)
+        hephaestus.right(90)
+        hephaestus.forward(height)
+        hephaestus.left(90)
         iteration += 1
 
     
