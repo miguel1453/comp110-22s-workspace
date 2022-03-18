@@ -8,8 +8,9 @@ def invert(original: dict[str, str]) -> dict[str, str]:
     """Makes a new dictionary that is the original one but inverted."""
     inverted: dict[str, str] = dict()
     for key in original:
+        if original[key] in inverted:
+            raise KeyError("Cannot have the same key more than once in dictionaries!")
         inverted[original[key]] = key
-    raise KeyError()
     return inverted
 
 

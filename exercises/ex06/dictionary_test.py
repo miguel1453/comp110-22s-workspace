@@ -5,6 +5,7 @@ __author__ = "730472629"
 
 
 from dictionary import invert, favorite_color, count
+import pytest
 
 
 # Tests for invert function
@@ -26,6 +27,11 @@ def test_invert_edge_case() -> None:
     assert invert(dictionary) == {}
 
 
+with pytest.raises(KeyError):
+    dictionary = {'kris': 'jordan', 'michael': 'jordan'}
+    invert(dictionary)
+
+    
 # Tests for favorite_color function
 def test_color_use_case() -> None:
     """Norma use test for favorite_color."""
