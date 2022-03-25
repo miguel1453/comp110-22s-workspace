@@ -63,7 +63,7 @@ def concat(table_1: dict[str, list[str]], table_2: dict[str, list[str]]) -> dict
     for column in table_1:
         result[column] = table_1[column]
     for column in table_2:
-        if column in table_2:
+        if column in result:
             result[column] += table_2[column]
         else:
             result[column] = table_2[column]
