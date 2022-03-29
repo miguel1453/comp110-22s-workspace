@@ -4,8 +4,6 @@ __author__ = "730472629"
 
 from csv import DictReader
 
-# Define your functions below
-
 
 def read_csv_rows(filename: str) -> list[dict[str, str]]:
     """Read the rows of a csv into a 'table'."""
@@ -78,4 +76,23 @@ def count(column: list[str]) -> dict[str, int]:
             result[item] += 1
         else:   
             result[item] = 1
+    return result
+
+
+def select_values(table: list[dict[str, str]], key: str, value: str) -> list[dict[str, str]]:
+    """Produces a column-based table of only rows that have a specfic value in a key."""
+    result: list[dict[str, str]] = []
+    i: int = 0
+    while i < len(table):
+        if table[i][key] != value:
+            result.append(table[i])
+        i += 1
+    return result
+
+
+def reorder_list(table: dict[str, int], order: list[str]) -> dict[str, int]:
+    """Reorders a list into desired order and with deired keys only."""
+    result: dict[str, int] = {}
+    for x in order:
+        result[x] = table[x]
     return result
